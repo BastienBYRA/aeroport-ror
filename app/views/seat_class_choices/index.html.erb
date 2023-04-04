@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Seat class choices</h1>
+
+<div id="seat_class_choices">
+  <% @seat_class_choices.each do |seat_class_choice| %>
+    <%= render seat_class_choice %>
+    <p>
+      <%= link_to "Show this seat class choice", seat_class_choice %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New seat class choice", new_seat_class_choice_path %>

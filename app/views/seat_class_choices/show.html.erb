@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @seat_class_choice %>
+
+<div>
+  <%= link_to "Edit this seat class choice", edit_seat_class_choice_path(@seat_class_choice) %> |
+  <%= link_to "Back to seat class choices", seat_class_choices_path %>
+
+  <%= button_to "Destroy this seat class choice", @seat_class_choice, method: :delete %>
+</div>

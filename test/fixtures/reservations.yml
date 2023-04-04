@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  seat_number: 1
+  user: one
+  flight: one
+  seat_class_choice: one
+
+two:
+  seat_number: 1
+  user: two
+  flight: two
+  seat_class_choice: two
