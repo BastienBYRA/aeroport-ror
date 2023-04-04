@@ -30,6 +30,9 @@ gem "jbuilder"
 # Pour l'authentification et creation classe User
 gem 'devise'
 
+# Pagination des "flights"
+gem 'kaminari'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
