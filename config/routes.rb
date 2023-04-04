@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :seat_class_choices
   devise_for :users
 =begin
   resources :flights
