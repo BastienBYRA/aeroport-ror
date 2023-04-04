@@ -13,6 +13,20 @@ class ReservationsController < ApplicationController
   # GET /reservations/new
   def new
     @reservation = Reservation.new
+    flight_exist = Flight.exists?(params[:flight_id])
+
+    # Si le flight existe pas, renvoie à la page principal
+    if flight_exist == false
+      redirect_to controller: :flights, action: :index
+    end
+
+    if current_user
+      @reservation.user_id = current_user.id
+    end
+
+    @reservation.flight_id = params[:flight_id]
+
+    @all_seat_class_choice = SeatClassChoice.all
   end
 
   # GET /reservations/1/edit

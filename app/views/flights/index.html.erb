@@ -2,13 +2,41 @@
 
 <h1>Flights</h1>
 
-<div id="flights">
+<!--<div id="flights">
   <% @flights.each do |flight| %>
     <%= render flight %>
     <p>
       <%= link_to "Show this flight", flight %>
     </p>
   <% end %>
+</div>-->
+
+<div>
+  <table>
+    <thead>
+    <tr>
+      <td>Numero</td>
+      <td>Depart</td>
+      <td>Arrivé</td>
+      <td>Heure de depart</td>
+      <td>Heure d'arrivé</td>
+      <td>Reserver</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% @flights.each do |flight| %>
+      <tr>
+        <td><%= flight.number %></td>
+        <td><%= flight.departure_airport %></td>
+        <td><%= flight.arrival_airport %></td>
+        <td><%= flight.departure_date %></td>
+        <td><%= flight.departure_date + flight.duration.minutes %></td>
+<!--        <td><button>Reserver</button></td>-->
+        <td><%= link_to "Reserver", new_reservation_path(:flight_id => flight.id) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 </div>
 
 <%= paginate @flights %>
