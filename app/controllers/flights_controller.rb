@@ -3,7 +3,8 @@ class FlightsController < ApplicationController
 
   # GET /flights or /flights.json
   def index
-    @flights = Flight.all
+    @flights = Flight.all.page(params[:page] || 1)
+    p @flights.count
   end
 
   # GET /flights/1 or /flights/1.json
