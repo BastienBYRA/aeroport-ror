@@ -2,12 +2,14 @@
 
 one:
   seat_number: 1
+  code: MyString
   user: one
   flight: one
   seat_class_choice: one
 
 two:
   seat_number: 1
+  code: MyString
   user: two
   flight: two
   seat_class_choice: two
