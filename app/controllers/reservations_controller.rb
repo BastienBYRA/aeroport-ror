@@ -65,6 +65,7 @@ class ReservationsController < ApplicationController
   # POST /reservations or /reservations.json
   def create
     @reservation = Reservation.new(reservation_params)
+    @reservation.code = SecureRandom.hex(3)
 
     respond_to do |format|
       if @reservation.save

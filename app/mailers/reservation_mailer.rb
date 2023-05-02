@@ -2,6 +2,6 @@ class ReservationMailer < ApplicationMailer
   def new_reservation_email
     @reservation = params[:reservation]
 
-    mail(to: 'kefeho5924@syinxun.com', subject: 'Test email')
+    mail(to: @reservation.user.email, subject: 'Test email')
   end
 end

@@ -9,7 +9,7 @@
   Order details<br>
   --------------------------
 </p>
-<p>seat_number: <%= SecureRandom.hex(3) %></p>
+<p>seat_number: <%= @reservation.code %></p>
 <p>user_id: <%= @reservation.user.email %></p>
 <p>flight_id: <%= @reservation.flight_id %></p>
 <p>seat_class_choice_id: <%= @reservation.seat_class_choice_id %></p>
