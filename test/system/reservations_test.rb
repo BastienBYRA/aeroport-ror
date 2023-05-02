@@ -14,6 +14,7 @@ class ReservationsTest < ApplicationSystemTestCase
     visit reservations_url
     click_on "New reservation"
 
+    fill_in "Code", with: @reservation.code
     fill_in "Flight", with: @reservation.flight_id
     fill_in "Seat class choice", with: @reservation.seat_class_choice_id
     fill_in "Seat number", with: @reservation.seat_number
@@ -28,6 +29,7 @@ class ReservationsTest < ApplicationSystemTestCase
     visit reservation_url(@reservation)
     click_on "Edit this reservation", match: :first
 
+    fill_in "Code", with: @reservation.code
     fill_in "Flight", with: @reservation.flight_id
     fill_in "Seat class choice", with: @reservation.seat_class_choice_id
     fill_in "Seat number", with: @reservation.seat_number

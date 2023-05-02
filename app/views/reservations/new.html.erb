@@ -1,9 +1,28 @@
 <h1>New reservation</h1>
 
-<%= render "form", reservation: @reservation %>
+<%= form_with model:@reservation, url: reservations_path, method: :post do |form| %>
+  <%= form.hidden_field :flight_id, value:@reservation.flight_id %>
+  <%= form.hidden_field :user_id, value:@reservation.user_id %>
 
-<br>
+  <%= form.label :seat_number, "Nombre de sièges:" %>
+  <%= form.number_field :seat_number, in: 1..@max_seat, value:@current_nb_seat %>
+  </br>
+  <%= form.label :seat_class_choice_id, "Classe de sièges:" %>
+  <%= form.select :seat_class_choice_id, @all_seat_class_choice.map {|item| [item.name, item.id]}, {selected:@default_class_seat}, { onchange: "changeClass(this.value);" } %>
+  </br>
+  <%= form.submit "Valider" %>
+<% end %>
 
 <div>
-  <%= link_to "Back to reservations", reservations_path %>
+  <%= link_to "Retour à la page principale.", flights_path %>
 </div>
+
+<script>
+    const flight_id = document.getElementById("reservation_flight_id").value;
+
+    //Faire un call AJAX plutot pour récupérer le nombre de sièges pour la classe de voyage?
+    function changeClass(id_class_seat) {
+        const current_nb_seat = document.getElementById("reservation_seat_number").value;
+        window.location.href = "/reservations/new?flight_id=" + flight_id + "&seat_class_choice_id=" + id_class_seat + "&nb_seat=" + current_nb_seat;
+    }
+</script>
