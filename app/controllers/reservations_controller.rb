@@ -25,6 +25,9 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       if @reservation.save
+        #Envoyer un email de confirmation de réservation
+        ReservationMailer.with(reservation: @reservation).new_reservation_email.deliver_later
+
         format.html { redirect_to reservation_url(@reservation), notice: "Reservation was successfully created." }
         format.json { render :show, status: :created, location: @reservation }
       else
