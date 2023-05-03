@@ -3,7 +3,17 @@ class ReservationsController < ApplicationController
 
   # GET /reservations or /reservations.json
   def index
+    # Affiche toutes les reservations de l'utilisateur courant
+
+
+    if current_user
+      @reservations = Reservation.where(user_id: current_user.id)
+    end
+
+
+=begin
     @reservations = Reservation.all
+=end
   end
 
   # GET /reservations/1 or /reservations/1.json
@@ -13,11 +23,17 @@ class ReservationsController < ApplicationController
   # GET /reservations/new
   def new
     @reservation = Reservation.new
-    flight_exist = Flight.exists?(params[:flight_id])
 
+    flight_exist = Flight.exists?(params[:flight_id])
     # Si le flight existe pas, renvoie à la page principal
     if flight_exist == false
       redirect_to controller: :flights, action: :index
+    end
+
+    # Verifie si une reservation existe déja, auquel cas, on le renvoie sur le detail de sa réservation
+    already_reservation = Reservation.find_by(user_id: current_user.id, flight_id: params[:flight_id])
+    if already_reservation.present?
+      redirect_to controller: :reservations, action: :show, id: already_reservation.id and return
     end
 
     if current_user
