@@ -24,6 +24,9 @@
     <%= link_to "Retour à la liste des réservations.", reservations_path %>
   </div>
 
+  <div class="mt-4 text-end">
+    <%= button_to "Supprimer la réservation", @reservation, method: :delete, class: "btn btn-danger" %>
+  </div>
 </div>
 
 
