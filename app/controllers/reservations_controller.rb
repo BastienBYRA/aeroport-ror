@@ -24,21 +24,22 @@ class ReservationsController < ApplicationController
   def new
     @reservation = Reservation.new
 
-    flight_exist = Flight.exists?(params[:flight_id])
     # Si le flight existe pas, renvoie à la page principal
+    flight_exist = Flight.exists?(params[:flight_id])
     if flight_exist == false
       redirect_to controller: :flights, action: :index
     end
 
-    # Verifie si une reservation existe déja, auquel cas, on le renvoie sur le detail de sa réservation
-    already_reservation = Reservation.find_by(user_id: current_user.id, flight_id: params[:flight_id])
-    if already_reservation.present?
-      redirect_to controller: :reservations, action: :show, id: already_reservation.id and return
-    end
-
     if current_user
       @reservation.user_id = current_user.id
+
+      # Verifie si une reservation existe déja, auquel cas, on le renvoie sur le detail de sa réservation
+      already_reservation = Reservation.find_by(user_id: current_user.id, flight_id: params[:flight_id])
+      if already_reservation.present?
+        redirect_to controller: :reservations, action: :show, id: already_reservation.id and return
+      end
     end
+
 
     flight = Flight.find(params[:flight_id])
 
@@ -80,6 +81,12 @@ class ReservationsController < ApplicationController
 
   # POST /reservations or /reservations.json
   def create
+
+    # SEUL un utilisateur identifié peut effectuer une réservation
+    unless current_user
+      redirect_to new_user_session_path and return
+    end
+
     @reservation = Reservation.new(reservation_params)
     @reservation.code = SecureRandom.hex(3)
 
