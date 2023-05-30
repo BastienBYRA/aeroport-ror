@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :seat_class_choices
   devise_for :users
   resources :flights
+
 =begin
   resources :flights do
     get '/:page', action: :index, on: :collection

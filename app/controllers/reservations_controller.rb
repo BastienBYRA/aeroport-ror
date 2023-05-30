@@ -4,16 +4,13 @@ class ReservationsController < ApplicationController
   # GET /reservations or /reservations.json
   def index
     # Affiche toutes les reservations de l'utilisateur courant
-
-
     if current_user
-      @reservations = Reservation.where(user_id: current_user.id)
+      @reservations = Reservation
+                        .where(user_id: current_user.id)
+                        .order(:created_at)
+                        .page(params[:page] || 1)
     end
 
-
-=begin
-    @reservations = Reservation.all
-=end
   end
 
   # GET /reservations/1 or /reservations/1.json
