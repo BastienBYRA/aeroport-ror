@@ -1,21 +1,31 @@
-<h1>New reservation</h1>
+<div class="mx-5 mt-2">
+    <h1>Créer une nouvelle réservation</h1>
+    <p class="mb-4">Récap du vol : <%= @flight.departure_airport %> - <%= @flight.arrival_airport %> (<%= @flight.number %>) </p>
 
-<%= form_with model:@reservation, url: reservations_path, method: :post do |form| %>
-  <%= form.hidden_field :flight_id, value:@reservation.flight_id %>
-  <%= form.hidden_field :user_id, value:@reservation.user_id %>
+  <%= form_with model:@reservation, url: reservations_path, method: :post do |form| %>
+    <%= form.hidden_field :flight_id, value:@reservation.flight_id %>
+    <%= form.hidden_field :user_id, value:@reservation.user_id %>
 
-  <%= form.label :seat_number, "Nombre de sièges:" %>
-  <%= form.number_field :seat_number, in: 1..@max_seat, value:@current_nb_seat %>
-  </br>
-  <%= form.label :seat_class_choice_id, "Classe de sièges:" %>
-  <%= form.select :seat_class_choice_id, @all_seat_class_choice.map {|item| [item.name, item.id]}, {selected:@default_class_seat}, { onchange: "changeClass(this.value);" } %>
-  </br>
-  <%= form.submit "Valider" %>
-<% end %>
+    <div class="form-group">
+      <%= form.label :seat_number, "Nombre de sièges:" %>
+      <%= form.number_field :seat_number, in: 1..@max_seat, value:@current_nb_seat, class: "form-control w-50" %>
+    </div>
 
-<div>
-  <%= link_to "Retour à la page principale.", flights_path %>
+    <div class="form-group mt-2">
+      <%= form.label :seat_class_choice_id, "Classe de sièges:" %>
+      <%= form.select :seat_class_choice_id, @all_seat_class_choice.map {|item| [item.name, item.id]}, { selected: @selected_class_seat }, { onchange: "changeClass(this.value);", class: "form-control w-50" } %>
+    </div>
+
+    </br>
+
+    <%= form.submit "Valider", class: "btn btn-primary mt-1" %>
+  <% end %>
+
+  <div>
+    <%= link_to "Retour à la page principale.", flights_path %>
+  </div>
 </div>
+
 
 <script>
     const flight_id = document.getElementById("reservation_flight_id").value;
