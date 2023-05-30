@@ -36,13 +36,12 @@ class ReservationsController < ApplicationController
       # Verifie si une reservation existe déja, auquel cas, on le renvoie sur le detail de sa réservation
       already_reservation = Reservation.find_by(user_id: current_user.id, flight_id: params[:flight_id])
       if already_reservation.present?
-        redirect_to controller: :reservations, action: :show, id: already_reservation.id and return
+        redirect_to controller: :reservations, action: :edit, id: already_reservation.id and return
       end
     end
 
 
     @flight = Flight.find(params[:flight_id])
-
     @reservation.flight_id = params[:flight_id]
     @all_seat_class_choice = SeatClassChoice.all
 
@@ -50,22 +49,19 @@ class ReservationsController < ApplicationController
     seat_class_choose_exist = SeatClassChoice.exists?(params[:seat_class_choice_id])
     @current_nb_seat = 1
     @max_seat = 99
-    @default_class_seat = 0
+    @selected_class_seat = 0
+
     if seat_class_choose_exist != false
       seat_class_choose = SeatClassChoice.find(params[:seat_class_choice_id])
 
       # Si l'utilisateur à changer la classe de voyage
-      if seat_class_choose.name == "Economique"
-        @max_seat = (@flight.economy_class_seats > 99) ? 99 : @flight.economy_class_seats
-      elsif seat_class_choose.name == "Affaire"
-        @max_seat = (@flight.business_class_seats > 99) ? 99 : @flight.business_class_seats
-      end
-      @default_class_seat = seat_class_choose.id
+      @max_seat = @flight.getMaxAvailableSeats(seat_class_choose.name)
+      @selected_class_seat = seat_class_choose.id
 
     else
       default_seat_class = SeatClassChoice.first
-      @max_seat = (@flight.economy_class_seats > 99) ? 99 : @flight.economy_class_seats
-      @default_class_seat = default_seat_class.id
+      @max_seat = @flight.getMaxAvailableSeats(nil)
+      @selected_class_seat = default_seat_class.id
     end
 
     # Récupère le nombre de sièges selectionné par l'utilisateur avant refresh de la page
@@ -77,6 +73,44 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/1/edit
   def edit
+
+    # Si la reservation existe pas, renvoie à la page principal
+    reservation_exist = Reservation.exists?(params[:id])
+    if reservation_exist == false
+      redirect_to controller: :reservations, action: :index
+    end
+
+    @reservation = Reservation.find(params[:id])
+    @flight = Flight.find(@reservation.id)
+    @all_seat_class_choice = SeatClassChoice.all
+
+    # Récupère le nombre de sièges max
+    seat_class_choose_exist = false
+    if params[:seat_class_choice_id] != nil
+      seat_class_choose_exist = SeatClassChoice.exists?(params[:seat_class_choice_id])
+    end
+
+    @current_nb_seat = @reservation.seat_number
+    @max_seat = 99
+    @selected_class_seat = 0
+    if seat_class_choose_exist != false
+      seat_class_choose = SeatClassChoice.find(params[:seat_class_choice_id])
+
+      # Si l'utilisateur à changer la classe de voyage
+      @max_seat = @flight.getMaxAvailableSeats(seat_class_choose.name)
+      @selected_class_seat = seat_class_choose.id
+
+    else
+      default_seat_class = SeatClassChoice.find(@reservation.seat_class_choice_id)
+      @max_seat = @flight.getMaxAvailableSeats(default_seat_class.name)
+      @selected_class_seat = default_seat_class.id
+    end
+
+    # Récupère le nombre de sièges selectionné par l'utilisateur avant refresh de la page
+    if params[:nb_seat] != nil && params[:nb_seat].to_i > 0
+      @current_nb_seat = (params[:nb_seat].to_i  > @max_seat) ? @max_seat : params[:nb_seat].to_i
+    end
+
   end
 
   # POST /reservations or /reservations.json
@@ -106,9 +140,10 @@ class ReservationsController < ApplicationController
 
   # PATCH/PUT /reservations/1 or /reservations/1.json
   def update
+
     respond_to do |format|
       if @reservation.update(reservation_params)
-        format.html { redirect_to reservation_url(@reservation), notice: "Reservation was successfully updated." }
+        format.html { redirect_to reservations_path, notice: "Reservation was successfully updated." }
         format.json { render :show, status: :ok, location: @reservation }
       else
         format.html { render :edit, status: :unprocessable_entity }

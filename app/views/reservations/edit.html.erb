@@ -1,10 +1,38 @@
-<h1>Editing reservation</h1>
+<div class="mx-5 mt-2">
+  <h1>Modifier votre réservation</h1>
 
-<%= render "form", reservation: @reservation %>
+  <%= form_with model: @reservation, url: reservation_path(@reservation), method: :put do |form| %>
+    <%= form.hidden_field :flight_id, value:@reservation.flight_id %>
+    <%= form.hidden_field :user_id, value:@reservation.user_id %>
 
-<br>
+    <div class="form-group">
+      <%= form.label :seat_number, "Nombre de sièges:" %>
+      <%= form.number_field :seat_number, in: 1..@max_seat, value:@current_nb_seat, class: "form-control w-50" %>
+    </div>
 
-<div>
-  <%= link_to "Show this reservation", @reservation %> |
-  <%= link_to "Back to reservations", reservations_path %>
+    <div class="form-group mt-2">
+      <%= form.label :seat_class_choice_id, "Classe de sièges:" %>
+      <%= form.select :seat_class_choice_id, @all_seat_class_choice.map {|item| [item.name, item.id]}, { selected: @selected_class_seat }, { onchange: "changeClass(this.value, #{@reservation.id});", class: "form-control w-50" } %>
+    </div>
+
+    </br>
+
+    <%= form.submit "Valider", class: "btn btn-primary mt-1" %>
+  <% end %>
+
+  <div>
+    <%= link_to "Retour à la liste des réservations.", reservations_path %>
+  </div>
+
 </div>
+
+
+<script>
+    const flight_id = document.getElementById("reservation_flight_id").value;
+
+    //Faire un call AJAX plutot pour récupérer le nombre de sièges pour la classe de voyage?
+    function changeClass(id_class_seat, id_reservation) {
+        const current_nb_seat = document.getElementById("reservation_seat_number").value;
+        window.location.href = "/reservations/" + id_reservation + "/edit?seat_class_choice_id=" + id_class_seat + "&nb_seat=" + current_nb_seat;
+    }
+</script>

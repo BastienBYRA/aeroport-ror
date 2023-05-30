@@ -11,21 +11,19 @@
       <%= form.number_field :seat_number, in: 1..@max_seat, value:@current_nb_seat, class: "form-control w-50" %>
     </div>
 
-    </br>
-
-    <div class="form-group">
+    <div class="form-group mt-2">
       <%= form.label :seat_class_choice_id, "Classe de sièges:" %>
-      <%= form.select :seat_class_choice_id, @all_seat_class_choice.map {|item| [item.name, item.id]}, { selected: @default_class_seat }, { onchange: "changeClass(this.value);", class: "form-control w-50" } %>
-
+      <%= form.select :seat_class_choice_id, @all_seat_class_choice.map {|item| [item.name, item.id]}, { selected: @selected_class_seat }, { onchange: "changeClass(this.value);", class: "form-control w-50" } %>
     </div>
 
     </br>
-      <%= form.submit "Valider", class: "btn btn-primary mt-1" %>
-    <% end %>
 
-    <div>
-      <%= link_to "Retour à la page principale.", flights_path %>
-    </div>
+    <%= form.submit "Valider", class: "btn btn-primary mt-1" %>
+  <% end %>
+
+  <div>
+    <%= link_to "Retour à la page principale.", flights_path %>
+  </div>
 </div>
 
 
