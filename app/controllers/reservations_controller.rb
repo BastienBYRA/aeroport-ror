@@ -41,7 +41,7 @@ class ReservationsController < ApplicationController
     end
 
 
-    flight = Flight.find(params[:flight_id])
+    @flight = Flight.find(params[:flight_id])
 
     @reservation.flight_id = params[:flight_id]
     @all_seat_class_choice = SeatClassChoice.all
@@ -56,15 +56,15 @@ class ReservationsController < ApplicationController
 
       # Si l'utilisateur à changer la classe de voyage
       if seat_class_choose.name == "Economique"
-        @max_seat = (flight.economy_class_seats > 99) ? 99 : flight.economy_class_seats
+        @max_seat = (@flight.economy_class_seats > 99) ? 99 : @flight.economy_class_seats
       elsif seat_class_choose.name == "Affaire"
-        @max_seat = (flight.business_class_seats > 99) ? 99 : flight.business_class_seats
+        @max_seat = (@flight.business_class_seats > 99) ? 99 : @flight.business_class_seats
       end
       @default_class_seat = seat_class_choose.id
 
     else
       default_seat_class = SeatClassChoice.first
-      @max_seat = (flight.economy_class_seats > 99) ? 99 : flight.economy_class_seats
+      @max_seat = (@flight.economy_class_seats > 99) ? 99 : @flight.economy_class_seats
       @default_class_seat = default_seat_class.id
     end
 
