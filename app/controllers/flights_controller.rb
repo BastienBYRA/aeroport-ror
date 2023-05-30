@@ -3,7 +3,9 @@ class FlightsController < ApplicationController
 
   # GET /flights or /flights.json
   def index
-    @flights = Flight.all.page(params[:page] || 1)
+    @flights = Flight
+                 .order(:departure_date)
+                 .page(params[:page] || 1)
   end
 
   # GET /flights/1 or /flights/1.json
