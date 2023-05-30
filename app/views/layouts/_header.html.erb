@@ -1,0 +1,18 @@
+<header class="px-4 py-3 text-bg-dark d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-4 border-bottom">
+  <div class="col-md-3 mb-2 mb-md-0">
+    <%= link_to 'NOM DU SITE', root_path, class: 'nav-link text-white' %>
+  </div>
+
+  <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <li><%= link_to 'Vols', root_path, class: 'nav-link px-2 text-white' %></li>
+    <li><%= link_to 'Réservations', reservations_path, class: 'nav-link px-2 text-white' %></li>
+  </ul>
+
+  <div class="col-md-3 text-end">
+    <% if user_signed_in? %>
+      <%= button_to "Se déconnecter", destroy_user_session_path, method: :delete, class: 'btn btn-warning', link_to: 'flights'%>
+    <% else %>
+      <%= button_to "Se connecter", new_user_session_path, class: 'btn btn-outline-light me-2' %>
+    <% end %>
+  </div>
+</header>
