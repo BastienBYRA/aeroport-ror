@@ -31,10 +31,9 @@
 
 
 <script>
-    const flight_id = document.getElementById("reservation_flight_id").value;
-
     //Faire un call AJAX plutot pour récupérer le nombre de sièges pour la classe de voyage?
     function changeClass(id_class_seat, id_reservation) {
+        const flight_id = document.getElementById("reservation_flight_id").value;
         const current_nb_seat = document.getElementById("reservation_seat_number").value;
         window.location.href = "/reservations/" + id_reservation + "/edit?seat_class_choice_id=" + id_class_seat + "&nb_seat=" + current_nb_seat;
     }
