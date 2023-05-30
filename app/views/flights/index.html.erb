@@ -24,8 +24,8 @@
         <td><%= flight.number %></td>
         <td><%= flight.departure_airport %></td>
         <td><%= flight.arrival_airport %></td>
-        <td><%= flight.departure_date %></td>
-        <td><%= flight.departure_date + flight.duration.minutes %></td>
+        <td><%=  l flight.departure_date, format: :default_without_second %></td>
+        <td><%= l flight.departure_date + flight.duration.minutes, format: :default_without_second %></td>
         <td><%= link_to "Reserver", new_reservation_path(flight_id: flight.id), class: "btn btn-primary" %></td>
       </tr>
     <% end %>
