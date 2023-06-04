@@ -1,10 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @reservation %>
+<div class="mx-5 mt-2">
+  <p>Code de réservation : <%= @reservation.code %></p>
+  <p>Classe du/des siège(s) : <%= @reservation.seat_class_choice.name %></p>
+  <p>Nombre de(s) siège(s) : <%= @reservation.seat_number %></p>
+  <p>Vol : <%= @reservation.flight.arrival_airport %> - <%= @reservation.flight.departure_airport %> (<%=  l @reservation.flight.departure_date, format: :default_without_second %> - <%= l @reservation.flight.departure_date + @reservation.flight.duration.minutes, format: :default_without_second %>)</p>
 
-<div>
-  <%= link_to "Edit this reservation", edit_reservation_path(@reservation) %> |
-  <%= link_to "Back to reservations", reservations_path %>
+  <div>
+    <%= link_to "Retour à la liste des réservations.", reservations_path %>
+  </div>
 
-  <%= button_to "Destroy this reservation", @reservation, method: :delete %>
+  <div class="mt-4 text-end">
+    <%= button_to "Supprimer la réservation", @reservation, method: :delete, class: "btn btn-danger" %>
+  </div>
+
 </div>
