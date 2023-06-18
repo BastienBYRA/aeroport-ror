@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+
+.width-login {
+    width: 20rem;
+    height: 100%;
+    margin: auto;
+}

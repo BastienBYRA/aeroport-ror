@@ -19,6 +19,11 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
+    # SEUL un utilisateur identifié peut effectuer une réservation
+    if !user_signed_in?
+      redirect_to new_user_session_path
+    end
+
     @reservation = Reservation.new
 
     # Si le flight existe pas, renvoie à la page principal

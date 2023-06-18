@@ -6,19 +6,15 @@
 <body>
 <p>Bonjour <%= @reservation.user.email %>, merci pour votre réservation !</p>
 <p>
-  Order details<br>
-  --------------------------
+  Détail de votre réservation<br>
+  -------------------------------------------------
 </p>
 
 <p>Code de réservation : <%= @reservation.code %></p>
+<p>Nombre de siège(s) : <%= @reservation.seat_number %></p>
 <p>Classe du/des siège(s) : <%= @reservation.seat_class_choice.name %></p>
-<p>Nombre de(s) siège(s) : <%= @reservation.seat_number %></p>
-<p>Vol : <%= @reservation.flight.arrival_airport %> - <%= @reservation.flight.departure_airport %> (<%=  l @reservation.flight.departure_date, format: :default_without_second %> - <%= l @reservation.flight.departure_date + @reservation.flight.duration.minutes, format: :default_without_second %>)</p>
+<p>Vol de <%= @reservation.flight.arrival_airport %> à <%= @reservation.flight.departure_airport %>.</p>
+<p>Départ le <%=  l @reservation.flight.departure_date, format: :default_without_second %> et arrivée le <%= l @reservation.flight.departure_date + @reservation.flight.duration.minutes, format: :default_without_second %></p>
 
-<p>
-  Message:<br>
-  ----------
-</p>
-Merci pour votre réservation !
 </body>
 </html>
