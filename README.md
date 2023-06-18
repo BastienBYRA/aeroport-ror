@@ -9,11 +9,11 @@ Aeroport ROR (Ruby On Rails) est un site web en RUBY simpliste permettant de con
 2. Lancer le dans votre editeur de code
 3. Executer ces commandes dans votre terminal dans le repertoire du projet :
    - ```bundle install``` (Pour installer les dépendances)
-   - ```rails s``` ou ```rails server``` ou ```bin/rails server``` (Pour lancer le site web)
    - ```rails db:migrate RAILS_ENV=development``` (Pour créer la base de donnée et choisir l'environnement de développement)
    - ```rails db:seed``` (Pour remplir la base de donnée avec des données de test)
-   
-Vous pourrez alors accéder a ce projet à l'URL http://127.0.0.1:3000/
+   - ```rails s``` ou ```rails server``` ou ```bin/rails server``` (Pour lancer le site web)
+
+Vous pourrez alors accéder à ce projet à l'URL http://127.0.0.1:3000/
 
 ## Retour d'experience 
 
