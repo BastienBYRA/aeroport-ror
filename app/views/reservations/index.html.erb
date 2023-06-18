@@ -7,8 +7,12 @@
     <thead>
     <tr>
       <th>Numéro de vol</th>
+      <th>Aéroport de départ</th>
+      <th>Aéroport d’arrivée</th>
+      <th>Date et heure de départ</th>
+      <th>Date et heure d’arrivée</th>
       <th>Nombre du siège</th>
-      <th>Type de siège</th>
+      <th>Classe de siège</th>
       <th>Modifier</th>
       <th>Annuler</th>
     </tr>
@@ -17,6 +21,10 @@
     <% @reservations.each do |reservation| %>
       <tr>
         <td><%= reservation.flight.number %></td>
+        <td><%= reservation.flight.departure_airport %></td>
+        <td><%= reservation.flight.arrival_airport %></td>
+        <td><%= l reservation.flight.departure_date, format: :default_without_second %></td>
+        <td><%= l reservation.flight.departure_date + reservation.flight.duration.minutes, format: :default_without_second %></td>
         <td><%= reservation.seat_number %></td>
         <td><%= reservation.seat_class_choice.name %></td>
         <td><%= link_to "Modifier", edit_reservation_path(id: reservation.id), class: "btn btn-primary text-white" %></td>

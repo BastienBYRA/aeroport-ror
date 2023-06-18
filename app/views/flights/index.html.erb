@@ -2,10 +2,6 @@
 
 <h2  class="d-flex justify-content-center mb-4">Tous les vols</h2>
 
-<div class="d-flex justify-content-end me-5 mb-2">
-  <%= link_to "Créer un vol", new_flight_path, class: "btn btn-warning text-white" %>
-</div>
-
 <div class="mx-5">
   <table class="table table-striped table-bordered text-center">
     <thead>
@@ -24,7 +20,7 @@
         <td><%= flight.number %></td>
         <td><%= flight.departure_airport %></td>
         <td><%= flight.arrival_airport %></td>
-        <td><%=  l flight.departure_date, format: :default_without_second %></td>
+        <td><%= l flight.departure_date, format: :default_without_second %></td>
         <td><%= l flight.departure_date + flight.duration.minutes, format: :default_without_second %></td>
         <td><%= link_to "Reserver", new_reservation_path(flight_id: flight.id), class: "btn btn-primary" %></td>
       </tr>
